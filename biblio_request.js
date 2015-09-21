@@ -31,7 +31,6 @@ function bookResultBuilder(parsedArray, nextPage) {
       finalBookArray.push(parsedArray[k]);
     }
     getRequestAndResponse(nextPage, finalBookArray);
-    console.log)finalBookArray.length);
 }
 // var queryString = qs.stringify({ 'author': 'chad harbach','results_per_page': '199','minimum_price':'10','page': '1' }); // 199 is api limit per page
 function httpsOptions(currentPageNumber) {
@@ -63,7 +62,7 @@ function getRequestAndResponse(currentPageNumber, finalBookArray) {
         bookResultBuilder(parsedArray, nextPage);
       }
       else {
-        // console.log(finalBookArray);
+        console.log(finalBookArray);
       }
       // console.log(finalBookArray)
     });
