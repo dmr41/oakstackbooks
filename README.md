@@ -21,7 +21,7 @@
   * Ditch https and querystring for ajax and jQuery.params()
   * Build Mongo database for books result storage and user info.
   * Abstract current function better
-    * i.e. var queryObject = own function
+    * i.e. queryObject to its own function/ remove unnecessary for loops
     * Create at least 2 classes:
       1. RequestURIBuildClass
       2. AjaxRequestClass

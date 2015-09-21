@@ -11,37 +11,45 @@ function pathBuilder(searchPath, pageNumber) {
   var query = biblioQueryURIBuilder(pageNumber);
   var fullPath = (searchPath + "?" + query);
   return fullPath;
-}
+} // end pathBuilder
+
 // Builds query string from queryObject
 function biblioQueryURIBuilder(pageNumber){
   var queryString = "";
   var queryObject = {       //
     author: 'chad harbach', // Single field first and/or last name
-    results_per_page: 199,  // Biblio api record limit per page
+    results_per_page: 50,  // Biblio api record limit per page
     minimum_price: 10,      // In dollars by default
     page: pageNumber        // Page number for multi-page responses
   };
   queryString = qs.stringify(queryObject); // converts queryObject to string
   return queryString;
-}
+} //end biblioQueryURIBuilder
 
-function bookResultBuilder(parsedArray, nextPage) {
-    for(var k = 0; k < parsedArray.length; ++k) {
+/* Takes array of book objects and puts then into finalBookArray.
+   Then makes callback to getRequestAndResponse for next page of data
+*/
+function bookResultBuilder(parsedArray, getRequestCallback) {
+    console.log("parsedArray: " + parsedArray.length);
+    for(var k = 0; k < parsedArray.length; ++k) {  // use an enum instead!!!!!
       finalBookArray.push(parsedArray[k]);
     }
-    getRequestAndResponse(nextPage);
-}
+    getRequestCallback;
+    console.log("finalArray " + finalBookArray.length);
+    return finalBookArray;
+} // end bookResultBuilder
 
+// Builds options Object to be passed to https get request
 function httpsOptions(currentPageNumber) {
   var options = {
     hostname: url,
     headers: {'X-API-KEY': process.env.BIBLIO_USER_KEY}, // ENV var USER_KEY
-    path: pathBuilder(searchPath, currentPageNumber),    //
+    path: pathBuilder(searchPath, currentPageNumber),
     method: 'GET',
     json: true
   };
-    return options;
-}
+  return options;
+} // end httpsOptions
 
 
 function getRequestAndResponse(currentPageNumber) {
@@ -58,14 +66,12 @@ function getRequestAndResponse(currentPageNumber) {
       var lastPage = parseInt(parsedBody.data.meta.pages);
       if (currentPage <= lastPage) {
         var nextPage = currentPage + 1;
-        bookResultBuilder(parsedArray, nextPage);
+        bookResultBuilder(parsedArray, getRequestAndResponse(nextPage));
       }
       else {
-        console.log(finalBookArray[0]);
       }
-      // console.log(finalBookArray)
     });
-
   });
-}
+} // end getRequestAndResponse
+
 getRequestAndResponse(pageNumber);
