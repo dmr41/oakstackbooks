@@ -16,15 +16,13 @@
   * API call working - But early stages
   * Functions partly refactored to core API roles
   * Currently using [https](https://nodejs.org/api/all.html#all_https) and [querystring](https://www.npmjs.com/package/querystring) modules for API call
+  * BookRequest object created - First stage abstraction
 
 ### Internal to do list
   * Ditch https and querystring for ajax and jQuery.params()
   * Build Mongo database for books result storage and user info.
-  * Abstract current function better
-    * i.e. queryObject to its own function/ remove unnecessary for loops
-    * Create at least 2 classes:
-      1. RequestURIBuildClass
-      2. AjaxRequestClass
+  * Abstract Begun with BookRequest class but still early stages
+  * queryObject to its own function/ remove unnecessary for loops
   * Once jQuery implemenation is working test HTML output
   * Add testing - jlint...selenium?
   * Consider a javascript framework Ember or Meteor
